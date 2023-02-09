@@ -9,8 +9,8 @@ using System.Linq.Expressions;
 
 namespace Presantation.Areas.Admin.Controllers
 {
-    [Area("Admin")]
-    //[Area(AreasConstants.Admin)]
+
+    [Area(AreasConstants.Admin)]
     public class UsersController : Controller
     {
         private readonly IUserRepository userRepository;

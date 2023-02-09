@@ -11,7 +11,7 @@ using GymManagementSystem.App.Constants;
 namespace Presentation.Areas.Client
 {
     [Authorize]
-    [Area("Client")]
+    [Area(AreasConstants.Client)]
     [Route("[area]/[controller]/[action]")]
 
     public class AccountController : Controller

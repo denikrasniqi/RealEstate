@@ -10,11 +10,12 @@ using System.Text;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
 using GymManagementSystem.Data.Identity;
+using GymManagementSystem.App.Constants;
 
-namespace Web.Controllers
+namespace Presentation.Areas.Client
 {
     [Authorize]
-    [Area("Client")]
+    [Area(AreasConstants.Client)]
     [Route("[area]/[controller]/[action]")]
     public class ManageController : Controller
     {

@@ -8,11 +8,11 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Presentation.Areas.Client.Models;
 
-namespace Web.Controllers
+namespace Presentation.Areas.Client
 {
     public class HomeController : Controller
     {
-        [Area("Client")]
+        [Area(AreasConstants.Client)]
         [Authorize( Roles = RoleConstants.Client)]
         public IActionResult Index()
         {

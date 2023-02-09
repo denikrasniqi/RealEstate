@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Presentation.Areas.Admin.Controllers
 {
-    [Area("Admin")]
+    [Area(AreasConstants.Admin)]
     [Authorize(Roles = RoleConstants.Admin)]
     public class HomeController : Controller
     {
