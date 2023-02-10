@@ -31,7 +31,7 @@ namespace GymManagementSystem.App.Implementations
             {
                 var id = userManager.GetUserId(_httpContext.User);
                 CurrentUser = userRepository.GetByStringId(id);
-                CurrentRole = _rolesRepository.GetByUserId(id);
+                CurrentRole = rolesRepository.GetByUserId(id);
             }
         }
 

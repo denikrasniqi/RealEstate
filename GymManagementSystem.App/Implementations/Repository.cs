@@ -12,7 +12,7 @@ namespace GymManagementSystem.App.Implementations
 {
     public class Repository<T> : IRepository<T> where T : class
     {
-        protected readonly GymSystemDBContext _context; //Qetu ke met 
+        protected readonly GymSystemDBContext _context; 
 
         public Repository(GymSystemDBContext context)
         {

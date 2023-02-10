@@ -53,7 +53,7 @@
                     <div class="card-header">
                         <h3 class="card-title">@cardTitleDescription</h3>
                         <span id="close" style="float:right" class="hidden-sm hidden-xs">
-                            <span id="expand">@SharedLocalizer["CloseHelp"]</span>
+                            @*<span id="expand">@SharedLocalizer["CloseHelp"]</span>*@
                             <i class="fa fa-chevron-right" id="icon-expand" aria-hidden="true"></i>
                         </span>
                     </div>
@@ -136,8 +136,9 @@
                                     <!-- select -->
                                     <div class="form-group">
                                         <label>Select role</label>
-                                        <select asp-for="RoleId" asp-items="@Model.Roles" class="form-control">
-                                            <option value="">- Select Role -</option>
+                                        <select asp-for="RoleId" class="form-control">
+                                            <option id="1" value="1">Client</option>
+                                            <option id="2" value="2">Admin</option>
                                         </select>
                                     </div>
                                 </div>
@@ -172,7 +173,7 @@
             <div class="col-md-3 navbar-right hidden-sm hidden-xs help-bar remove-left-padding" id="right-sidebar">
                 <div class="card @(string.IsNullOrEmpty(Model.Id) ? "card-primary" : "card-warning")">
                     <div class="card-header">
-                        <h3 class="card-title"><i class="fa fa-info"></i><span style="margin-left:15px" id="title">@SharedLocalizer["QuickHelp"]</span></h3>
+                        
                     </div>
                     <div class="card-body">
                         <p id="description">
@@ -311,87 +312,7 @@
             else {
                 var previewImageThumbnail = [];
                 var initialPreviewConfigThumbnail = [];
-        @if (Model.UserPicture != null)
-        {
-            @:previewImageThumbnail.push('@Url.Content(Model.UserPicture.Path)');
-            @:initialPreviewConfigThumbnail.push({ caption: "@Model.UserPicture.FileName", size: 762980, url: "@Url.Action("DeleteImage", new { id = Model.UserPicture.Id })", key: @Model.UserPicture.Id});
-        }
-                    $("#Picture").fileinput({
-                        overwriteInitial: true,//server upload action
-                        theme: "fa",
-                        overwriteInitial: true,
-                        showZoom: false,
-                        browseOnZoneClick: true,
-                        resizeImage: true,
-                        maxFileSize: maxUpload,
-                        allowedFileExtensions: uploadExtensions,
-                        resizeImageQuality: 0.3,
-                        showRemove: true,
-                        showUpload: false,
-                        showBrowse: true,
-                        showCancel: false,
-                        dropZoneEnabled: false,
-                        initialPreview: previewImageThumbnail,
-                        initialPreviewAsData: true,
-                        initialPreviewConfig: initialPreviewConfigThumbnail,
-                        fileActionSettings: {
-                            showRemove: true,
-                        },
-                    });
-            }
 
-            $('#Picture').on('fileclear', function (event) {
-                $('#IsPictureDeleted').val("True");
-            });
-
-            $(".help-sidebar").click(function () {
-                var event = $(this);
-                var title = $(this).attr("data-title");
-                var description = $(this).attr("data-description");
-                HelpSideBar(title, description);
-            });
-
-            //Function that fill help right side bar
-            function HelpSideBar(title, description) {
-                //debugger;
-                $("#title").text(title);
-                $("#description").text(description);
-            }
-
-            $("#close").click(function () {
-                if ($("#right-sidebar").is(':visible')) {
-                    Open();
-                }
-                else {
-                    Close();
-                }
-            });
-
-            function Open() {
-
-                var option = { direction: 'right' };
-                $("#right-sidebar").hide();
-                $("#left-side-bar").removeClass("col-md-9");
-                $("#left-side-bar").addClass("col-md-12");
-
-                $("#icon-expand").removeClass("fa-chevron-right");
-                $("#icon-expand").addClass("fa-chevron-left");
-                $("#expand").html("@SharedLocalizer["OpenHelp"]");
-
-                localStorage.isHelpVisible = false;
-            }
-            function Close() {
-                //debugger;
-                $("#left-side-bar").removeClass("col-md-12");
-                $("#left-side-bar").addClass("col-md-9");
-                var option = { direction: 'right' };
-                $("#right-sidebar").show();
-                $("#icon-expand").removeClass("fa-chevron-left");
-                $("#icon-expand").addClass("fa-chevron-right");
-                $("#expand").html("@SharedLocalizer["CloseHelp"]");
-
-                localStorage.isHelpVisible = true;
-            }
-        })
+            })
     </script>
 }
