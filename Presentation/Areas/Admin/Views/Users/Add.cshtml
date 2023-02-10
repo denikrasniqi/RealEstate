@@ -47,15 +47,10 @@
 <section class="content">
     <div class="container-fluid">
         <div class="row">
-            <!-- left column -->
-            <div class="col--md-9" id="left-side-bar">
+            <div class="col-12">
                 <div class="card card-@cssClass">
                     <div class="card-header">
                         <h3 class="card-title">@cardTitleDescription</h3>
-                        <span id="close" style="float:right" class="hidden-sm hidden-xs">
-                            @*<span id="expand">@SharedLocalizer["CloseHelp"]</span>*@
-                            <i class="fa fa-chevron-right" id="icon-expand" aria-hidden="true"></i>
-                        </span>
                     </div>
                     <!-- /.card-header -->
                     <form id="UserForm" asp-action="Add" asp-controller="Users" asp-area="Admin" method="post" enctype="multipart/form-data">
@@ -68,7 +63,7 @@
                                     <div class="form-group">
                                         <label>Name *</label>
                                         <div class="input-group">
-                                            <input type="text" asp-for="Name" class="form-control help-sidebar" data-title="User Name" data-description="Enter name..." placeholder="Enter name...">
+                                            <input type="text" asp-for="Name" class="form-control help-sidebar" placeholder="Enter name...">
                                             <div class="input-group-append ">
                                                 <span class="input-group-text"><i class="fa fa-user"></i></span>
                                             </div>
@@ -78,7 +73,7 @@
                                 <div class="col-sm-6">
                                     <div class="form-group">
                                         <label>Surname</label>
-                                        <input type="text" asp-for="Surname" class="form-control help-sidebar" data-title="User surname" data-description="Enter surname..." placeholder="Enter surname ...">
+                                        <input type="text" asp-for="Surname" class="form-control" placeholder="Enter surname ...">
                                     </div>
                                 </div>
                             </div>
@@ -137,6 +132,7 @@
                                     <div class="form-group">
                                         <label>Select role</label>
                                         <select asp-for="RoleId" class="form-control">
+                                            <option value="">-Select Role-</option>
                                             <option id="1" value="1">Client</option>
                                             <option id="2" value="2">Admin</option>
                                         </select>
@@ -168,21 +164,7 @@
                 </div>
                 <!-- /.card -->
             </div>
-            <!--/.col (left) -->
-            <!-- right column -->
-            <div class="col-md-3 navbar-right hidden-sm hidden-xs help-bar remove-left-padding" id="right-sidebar">
-                <div class="card @(string.IsNullOrEmpty(Model.Id) ? "card-primary" : "card-warning")">
-                    <div class="card-header">
-                        
-                    </div>
-                    <div class="card-body">
-                        <p id="description">
-                            @(string.IsNullOrEmpty(Model.Id) ? "User Add Form" : "User Edit Form")
-                        </p>
-                    </div>
-                </div>
-            </div>
-            <!--/.col (right) -->
+            <!-- /.col -->
         </div>
         <!-- /.row -->
     </div>
@@ -199,16 +181,6 @@
     <script>
         $(document).ready(function () {
 
-            if (localStorage.isHelpVisible == 'true') {
-                Close();
-            }
-            else {
-                Open();
-            }
-
-            $(window).scroll(function () {
-                $("#right-sidebar").css("margin-top", Math.max(0, $(this).scrollTop() - 112));
-            });
             var maxUpload = 3000;
             var uploadExtensions = @Html.Raw(Json.Serialize(extensions));
 
@@ -312,7 +284,8 @@
             else {
                 var previewImageThumbnail = [];
                 var initialPreviewConfigThumbnail = [];
+            }
 
-            })
+        })
     </script>
 }
