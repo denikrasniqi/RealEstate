@@ -3,8 +3,12 @@ using GymManagementSystem.App.Interfaces;
 using GymManagementSystem.Data.Context;
 using GymManagementSystem.Data.Identity;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Localization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using System.Globalization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -23,6 +27,7 @@ builder.Services.AddRazorPages();
 builder.Services.AddTransient<IUserRepository, UserRepository>();
 builder.Services.AddTransient<IRolesRepository, RolesRepository>();
 builder.Services.AddTransient<IUserService, UserService>();
+builder.Services.AddTransient<ISelectListService, SelectListService>();
 
 
 builder.Services.Configure<IdentityOptions>(options =>
@@ -46,6 +51,54 @@ builder.Services.Configure<IdentityOptions>(options =>
     options.User.RequireUniqueEmail = false;
 });
 
+builder.Services.Configure<RequestLocalizationOptions>(options =>
+{
+    var en = new CultureInfo("en-US");
+    en.NumberFormat.NumberDecimalSeparator = ".";
+    en.DateTimeFormat.ShortDatePattern = "dd/MM/yyyy";
+    en.DateTimeFormat.LongTimePattern = "dd/MM/yyyy";
+    en.DateTimeFormat.ShortTimePattern = "HH:mm";
+    en.DateTimeFormat.LongTimePattern = "HH:mm";
+    var al = new CultureInfo("sq-AL");
+    al.DateTimeFormat.ShortDatePattern = "dd.MM.yyyy";
+    al.DateTimeFormat.LongTimePattern = "dd.MM.yyyy";
+    al.DateTimeFormat.ShortTimePattern = "HH:mm";
+    al.DateTimeFormat.LongTimePattern = "HH:mm";
+    al.NumberFormat.NumberDecimalSeparator = ".";
+
+    var supportedCultures = new[]
+    {
+        en,
+        al
+    };
+
+    options.DefaultRequestCulture = new RequestCulture(en, en);
+    options.SupportedCultures = supportedCultures;
+    options.SupportedUICultures = supportedCultures;
+});
+
+builder.Services.AddLocalization(opts => { opts.ResourcesPath = "Resources"; });
+
+builder.Services.AddMvc()
+    .AddViewLocalization(
+        LanguageViewLocationExpanderFormat.Suffix,
+        opts => { opts.ResourcesPath = "Resources"; })
+    .AddDataAnnotationsLocalization();
+
+
+builder.Services.Configure<CookiePolicyOptions>(options =>
+{
+    // This lambda determines whether user consent for non-essential cookies is needed for a given request.
+    options.CheckConsentNeeded = context => false; // was true
+    options.MinimumSameSitePolicy = SameSiteMode.None;
+});
+
+builder.Services.Configure<CookieTempDataProviderOptions>(options =>
+{
+    options.Cookie.IsEssential = true;
+});
+
+
 builder.Services.ConfigureApplicationCookie(options =>
 {
     // Cookie settings
@@ -55,6 +108,11 @@ builder.Services.ConfigureApplicationCookie(options =>
     options.LoginPath = "/Identity/Account/Login";
     options.AccessDeniedPath = "/Identity/Account/AccessDenied";
     options.SlidingExpiration = true;
+});
+
+builder.Services.AddSession(options =>
+{
+    options.Cookie.IsEssential = true;
 });
 
 var app = builder.Build();
@@ -72,6 +130,13 @@ else
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
+var supportedCultures = new[] { "en-US", "sq-AL" };
+var localizationOptions = new RequestLocalizationOptions().SetDefaultCulture(supportedCultures[0])
+    .AddSupportedCultures(supportedCultures)
+    .AddSupportedUICultures(supportedCultures);
+
+app.UseRequestLocalization(localizationOptions);
+
 app.UseRouting();
 app.MapControllerRoute(
     name: "MyArea",
@@ -79,6 +144,8 @@ app.MapControllerRoute(
 
 app.UseAuthentication();
 app.UseAuthorization();
+
+app.UseSession();
 
 app.MapRazorPages();
 

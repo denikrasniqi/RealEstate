@@ -26,6 +26,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\GymManagementSystem.Data\GymManagementSystem.Data.csproj" />
+    <ProjectReference Include="..\GymManagementSystem.Models\GymManagementSystem.Models.csproj" />
   </ItemGroup>
 
 </Project>
