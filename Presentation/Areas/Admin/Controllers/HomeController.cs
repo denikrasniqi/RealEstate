@@ -13,6 +13,13 @@ namespace Presentation.Areas.Admin.Controllers
     {
         private IOptions<RequestLocalizationOptions> _options;
         private IHttpContextAccessor _httpContextAccessor;
+
+        public HomeController(IHttpContextAccessor httpContextAccessor, IOptions<RequestLocalizationOptions> options)
+        {
+            _httpContextAccessor = httpContextAccessor;
+            _options = options;
+        }
+
         public IActionResult Index()
         {
             return View();

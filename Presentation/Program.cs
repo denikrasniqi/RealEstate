@@ -27,6 +27,7 @@ builder.Services.AddRazorPages();
 builder.Services.AddTransient<IUserRepository, UserRepository>();
 builder.Services.AddTransient<IRolesRepository, RolesRepository>();
 builder.Services.AddTransient<IUserService, UserService>();
+builder.Services.AddTransient<IMemberRepository, MemberRepository>();
 builder.Services.AddTransient<ISelectListService, SelectListService>();
 
 

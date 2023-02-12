@@ -1,8 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
 
 namespace GymManagementSystem.Data.Entities
 {
+    [Table("Antaresimi")]
     public partial class Antaresimi
     {
         public Antaresimi()
@@ -10,13 +14,23 @@ namespace GymManagementSystem.Data.Entities
             Hyrjets = new HashSet<Hyrjet>();
         }
 
+        [Key]
         public int Id { get; set; }
-        public int UserId { get; set; }
+        [StringLength(450)]
+        public string UserId { get; set; } = null!;
+        [Column(TypeName = "datetime")]
         public DateTime StartDate { get; set; }
+        [StringLength(50)]
         public string Statusi { get; set; } = null!;
         public int Qmimi { get; set; }
-        public string _Antaresimi { get; set; } = null!;
+        [Column("Antaresimi")]
+        [StringLength(50)]
+        public string Antaresimi1 { get; set; } = null!;
 
+        [ForeignKey("UserId")]
+        [InverseProperty("Antaresimis")]
+        public virtual AspNetUser User { get; set; } = null!;
+        [InverseProperty("Antari")]
         public virtual ICollection<Hyrjet> Hyrjets { get; set; }
     }
 }

@@ -43,7 +43,6 @@ namespace Presantation.Areas.Admin.Controllers
         public IActionResult Add()
         {
             var model = new UserViewModel();
-            model.Roles = new SelectList(selectListService.GetRolesKeysValues(), "SKey", "Value", model.RoleId);
             return View(model);
         }
 
@@ -146,7 +145,6 @@ namespace Presantation.Areas.Admin.Controllers
         {
             var users = userRepository.GetAllWithRoles();
             //users.ForEach(x => x.PasswordHash = userRepository.GetProfilePicturePath(x.Id, (int)ThumbnailsEnum.Grid));
-
             try
             {
                 var result = users.Select(x => new

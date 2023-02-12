@@ -1,5 +1,5 @@
 ﻿@{
-    ViewData["Title"] = "Users";
+    ViewData["Title"] = "Members";
 }
 @section Styles{
     <!-- DataTables -->
@@ -37,7 +37,7 @@
                     <div class="card-header">
                         <div class="row">
                             <div class="col-md-6">
-                                <h3 class="card-title"><i class="fa fa-list"></i> &nbsp;&nbsp;@SharedLocalizer["UserList"]</h3>
+                                <h3 class="card-title"><i class="fa fa-list"></i> &nbsp;&nbsp;@SharedLocalizer["MemberList"]</h3>
                             </div>
                             <div class="col-md-6">
                                 <a asp-action="Add" style="float:right;" class="btn btn-sm btn-primary"><i class="fa fa-plus"></i> &nbsp;&nbsp;Add</a>
@@ -46,7 +46,7 @@
                     </div>
                     <!-- /.card-header -->
                     <div class="card-body">
-                        <table id="user-list" class="table table-bordered table-hover">
+                        <table id="member-list" class="table table-bordered table-hover">
                         </table>
                     </div>
                     <!-- /.card-body -->
@@ -81,8 +81,8 @@
     <script src="~/theme/plugins/toastr/toastr.min.js"></script>
     <script>
         $(document).ready(function () {
-            var url = "@Url.Action("GetUsersJson", "Users")";
-            var table = $("#user-list").DataTable({
+            var url = "@Url.Action("GetMembersJson", "Member")";
+            var table = $("#member-list").DataTable({
                 buttons: [
                     'copy', 'excel', 'pdf'
                 ],
@@ -101,41 +101,11 @@
                     dataSrc: ""
                 },
                 columns: [
-                    {
-                        data: "picture", title: "Picture", width: "4%", render: function (a, b, data, d) {
-                            return "<img src='" + data.picture + "'></img>"
-                        }
-                    },
-                    { data: "name", title: "Name" },
-                    { data: "surname", title: "Surname", },
-                    { data: "email", title: "Email" },
-                    {
-                        data: "emailConfirmed", title: "Email Confirmed", sClass: "text-center", render: function (a, b, data, d) {
-                            if (data.emailConfirmed == true) {
-                                return '<i class="fa fa-check text-success"></i>';
-                            }
-                            else {
-                                return '<i class="fa fa-check text-danger"></i>';
-                            }
-                        }
-                    },
-                    { data: "role", title: "Role" },
-                    {
-                        data: null, title: "Actions", sClass: "text-center", render: function (a, b, data, d) {
-
-                            var actions = '<div class="btn-group btn-hspace">' +
-                                '<button type= "button" data-toggle="dropdown" class="btn btn-default btn-sm dropdown-toggle" ariaexpanded="true"><spanclass="icon mdi mdi-chevron-down"></span></button >' +
-                                '<div class="dropdown-menu dropdown-menu-right" >';
-
-                            var urlEdit = '@Url.Action("Edit", "Users", new { area = "Admin"})';
-                            var urlDetails = '@Url.Action("Details", "Users", new { area = "Admin"})';
-                            actions += '<a class="dropdown-item" href="' + urlEdit + '/' + data.id + '" data-id="' + data.id + '"><i class="fa fa-edit text-warning"></i> Edit</a>';
-                            actions += '<a class="dropdown-item" href="' + urlDetails + '/' + data.id + '" data-id="' + data.id + '"><i class="fa fa-edit text-primary"></i> Details</a>';
-                            actions += '<a class="dropdown-item js-delete" href="javascript:void(0)" data-id="' + data.id + '"><i class="fa fa-trash text-danger"></i> Delete</a>';
-                            actions += '</div></div>';
-                            return actions;
-                        },
-                    }
+                    { data: "id", title: "Id" },
+                    { data: "startdate", title: "StartDate" },
+                    { data: "status", title: "Status", },
+                    { data: "price", title: "Price" },
+                    { data: "membership", title: "Membership" },
                 ],
             });
 

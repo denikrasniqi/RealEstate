@@ -26,19 +26,16 @@ namespace GymManagementSystem.Data.Context
         public virtual DbSet<AspNetUserToken> AspNetUserTokens { get; set; } = null!;
         public virtual DbSet<Hyrjet> Hyrjets { get; set; } = null!;
 
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Antaresimi>(entity =>
             {
-                entity.ToTable("Antaresimi");
-
-                entity.Property(e => e._Antaresimi)
-                    .HasMaxLength(50)
-                    .HasColumnName("Antaresimi");
-
-                entity.Property(e => e.StartDate).HasColumnType("datetime");
-
-                entity.Property(e => e.Statusi).HasMaxLength(50);
+                entity.HasOne(d => d.User)
+                    .WithMany(p => p.Antaresimis)
+                    .HasForeignKey(d => d.UserId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Antaresimi_AspNetUsers");
             });
 
             modelBuilder.Entity<AspNetRole>(entity =>
@@ -46,40 +43,13 @@ namespace GymManagementSystem.Data.Context
                 entity.HasIndex(e => e.NormalizedName, "RoleNameIndex")
                     .IsUnique()
                     .HasFilter("([NormalizedName] IS NOT NULL)");
-
-                entity.Property(e => e.Name).HasMaxLength(256);
-
-                entity.Property(e => e.NormalizedName).HasMaxLength(256);
-            });
-
-            modelBuilder.Entity<AspNetRoleClaim>(entity =>
-            {
-                entity.HasIndex(e => e.RoleId, "IX_AspNetRoleClaims_RoleId");
-
-                entity.HasOne(d => d.Role)
-                    .WithMany(p => p.AspNetRoleClaims)
-                    .HasForeignKey(d => d.RoleId);
             });
 
             modelBuilder.Entity<AspNetUser>(entity =>
             {
-                entity.HasIndex(e => e.NormalizedEmail, "EmailIndex");
-
                 entity.HasIndex(e => e.NormalizedUserName, "UserNameIndex")
                     .IsUnique()
                     .HasFilter("([NormalizedUserName] IS NOT NULL)");
-
-                entity.Property(e => e.Email).HasMaxLength(256);
-
-                entity.Property(e => e.Name).HasMaxLength(50);
-
-                entity.Property(e => e.NormalizedEmail).HasMaxLength(256);
-
-                entity.Property(e => e.NormalizedUserName).HasMaxLength(256);
-
-                entity.Property(e => e.Surname).HasMaxLength(50);
-
-                entity.Property(e => e.UserName).HasMaxLength(256);
 
                 entity.HasMany(d => d.Roles)
                     .WithMany(p => p.Users)
@@ -97,58 +67,25 @@ namespace GymManagementSystem.Data.Context
                         });
             });
 
-            modelBuilder.Entity<AspNetUserClaim>(entity =>
-            {
-                entity.HasIndex(e => e.UserId, "IX_AspNetUserClaims_UserId");
-
-                entity.HasOne(d => d.User)
-                    .WithMany(p => p.AspNetUserClaims)
-                    .HasForeignKey(d => d.UserId);
-            });
-
             modelBuilder.Entity<AspNetUserLogin>(entity =>
             {
                 entity.HasKey(e => new { e.LoginProvider, e.ProviderKey });
-
-                entity.HasIndex(e => e.UserId, "IX_AspNetUserLogins_UserId");
-
-                entity.Property(e => e.LoginProvider).HasMaxLength(128);
-
-                entity.Property(e => e.ProviderKey).HasMaxLength(128);
-
-                entity.HasOne(d => d.User)
-                    .WithMany(p => p.AspNetUserLogins)
-                    .HasForeignKey(d => d.UserId);
             });
 
             modelBuilder.Entity<AspNetUserToken>(entity =>
             {
                 entity.HasKey(e => new { e.UserId, e.LoginProvider, e.Name });
-
-                entity.Property(e => e.LoginProvider).HasMaxLength(128);
-
-                entity.Property(e => e.Name).HasMaxLength(128);
-
-                entity.HasOne(d => d.User)
-                    .WithMany(p => p.AspNetUserTokens)
-                    .HasForeignKey(d => d.UserId);
             });
 
             modelBuilder.Entity<Hyrjet>(entity =>
             {
-                entity.ToTable("Hyrjet");
-
-                entity.Property(e => e.KohaHyrjes).HasColumnType("datetime");
-
-                entity.Property(e => e.NrHyrjeve)
-                    .HasMaxLength(10)
-                    .IsFixedLength();
+                entity.Property(e => e.NrHyrjeve).IsFixedLength();
 
                 entity.HasOne(d => d.Antari)
                     .WithMany(p => p.Hyrjets)
                     .HasForeignKey(d => d.AntariId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Hyrjet_Hyrjet");
+                    .HasConstraintName("FK_Hyrjet_Antaresimi");
             });
 
             OnModelCreatingPartial(modelBuilder);
