@@ -28,6 +28,7 @@
                 <ol class="breadcrumb float-sm-right">
                     <li class="breadcrumb-item"><a href="#">Home</a></li>
                     <li class="breadcrumb-item"><a href="#">Users</a></li>
+                    <li class="breadcrumb-item"><a href="#">Member</a></li>
                     @if (string.IsNullOrEmpty(Model.Id))
                     {
                         <li class="breadcrumb-item active">Add</li>
@@ -55,7 +56,6 @@
                     <!-- /.card-header -->
                     <form id="UserForm" asp-action="Add" asp-controller="Users" asp-area="Admin" method="post" enctype="multipart/form-data">
                         <input type="hidden" asp-for="Id" />
-                        <input type="hidden" asp-for="IsPictureDeleted" />
                         <div class="card-body">
 
                             <div class="row">
@@ -131,27 +131,14 @@
                                     <!-- select -->
                                     <div class="form-group">
                                         <label>Select role</label>
-                                        <select asp-for="RoleId" asp-items="@Model.Roles" class="form-control">
-                                        <option value="">- Select Role -</option> 
+                                        <select asp-for="RoleId" class="form-control">
+                                            <option value="">-Select Role-</option>
+                                            <option id="1" value="1">Client</option>
+                                            <option id="2" value="2">Admin</option>
                                         </select>
                                     </div>
                                 </div>
                             </div>
-                            <div class="row">
-                                <div class="col-sm-12">
-                                    <div class="form-group">
-                                        <label>Picture</label>
-                                        <div class="custom-file">
-                                            <div>
-                                                <input asp-for="Picture" type="file" accept="image/*" class="input-sm validate-upload" />
-                                            </div>
-                                        </div>
-                                        <label><small>.jpg | 3mb max</small></label>
-                                    </div>
-                                </div>
-                                <!-- /.col -->
-                            </div>
-
                         </div>
                         <!-- /.card-body -->
                         <!-- /.card-footer -->
@@ -258,32 +245,6 @@
                     form.submit();
                 }
             });
-
-            if ('@Model.Id' == '0') {
-                $("#Picture").fileinput({
-                    theme: "fa",
-                    showZoom: false,
-                    browseOnZoneClick: true,
-                    resizeImage: true,
-                    resizeImageQuality: 0.3,
-                    showRemove: true,
-                    showUpload: false,
-                    showBrowse: true,
-                    showCancel: false,
-                    dropZoneEnabled: false,
-                    maxFileSize: maxUpload,
-                    allowedFileExtensions: uploadExtensions,
-                    initialPreviewAsData: true,
-                    fileActionSettings: {
-                        showRemove: true,
-                    }
-                });
-            }
-            else {
-                var previewImageThumbnail = [];
-                var initialPreviewConfigThumbnail = [];
-            }
-
         })
     </script>
 }
