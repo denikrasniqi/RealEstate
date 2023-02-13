@@ -29,5 +29,10 @@ namespace Presentation.Areas.Client
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+
+        public IActionResult About()
+        {
+            return View();
+        }
     }
 }
