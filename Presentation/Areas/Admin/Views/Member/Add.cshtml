@@ -58,34 +58,23 @@
                     <form id="MemberForm" asp-action="Add" asp-controller="Member" asp-area="Admin" method="post" enctype="multipart/form-data">
                         <input type="hidden" asp-for="Id" />
                         <div class="card-body">
-
+                            <div class="row" id="showNotFoundAlert" hidden>
+                                <div class="alert alert-warning" role="alert">
+                                    User is not found!
+                                </div>
+                            </div>
                             <div class="row">
                                 <div class="col-sm-6">
                                     <div class="form-group">
-                                        <label>Name *</label>
-                                        <div class="input-group">
-                                            <input type="text" asp-for="UserId" class="form-control help-sidebar" placeholder="Enter userid...">
-                                            <div class="input-group-append ">
-                                                <span class="input-group-text"><i class="fa fa-user"></i></span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-sm-12">
-                                        <!-- select -->
-                                        <div class="form-group">
-                                            <label>@SharedLocalizer["SelectType"]</label>
-                                            <select asp-for="UserId" asp-items="@Model.Users" class="form-control">
-                                                <option value="">- Select type -</option>
-                                            </select>
-                                        </div>
+                                        <label for="Name">Name</label>
+                                        <input type="text" asp-for="Name" class="form-control help-sidebar" placeholder="Enter Name..." required>
+                                        <input class="btn btn-success mt-3" value="Search" id="searchForUser" />
                                     </div>
                                 </div>
                                 <div class="col-sm-6">
                                     <div class="form-group">
-                                        <label>Surname</label>
-                                        <input type="datetime" asp-for="StartDate" class="form-control" placeholder="Enter date ...">
+                                        <label for="Surname">Surname</label>
+                                        <input type="text" asp-for="Surname" class="form-control" placeholder="Enter Surname ..." required>
                                     </div>
                                 </div>
                             </div>
@@ -109,9 +98,6 @@
                                     <input type="text" asp-for="Antaresimi" class="form-control" placeholder="Enter membership ...">
                                 </div>
                             </div>
-                        
-                            
-
                         </div>
                         <!-- /.card-body -->
                         <!-- /.card-footer -->
@@ -141,6 +127,33 @@
 
             var maxUpload = 3000;
             var uploadExtensions = @Html.Raw(Json.Serialize(extensions));
+
+            //this waits for click of button searchForUser
+            $('#searchForUser').on('click', function () {
+
+                //calls api to get user
+                //set the form data from given user
+                $.ajax({
+                    type: "GET",
+                    url: '@Url.Action("getUserByName")',
+                    dataType: 'json',
+                    data: {
+                        name: $('#Name').val()
+                    },
+                    success: function (data) {
+                        //hide alert
+                        $("#showNotFoundAlert").prop("hidden", true)
+                        //sets the result to textbox Surname
+                        $('#Surname').val(data.surname);
+                    },
+                    error: function (error) {
+                        if (error.status === 404) {
+                            //show alert
+                            $("#showNotFoundAlert").prop("hidden", false)
+                        }
+                    }
+                })
+            })
 
             $('#UserForm').validate({
                 rules: {

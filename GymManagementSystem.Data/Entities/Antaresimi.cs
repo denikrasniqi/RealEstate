@@ -18,7 +18,7 @@ namespace GymManagementSystem.Data.Entities
         public int Id { get; set; }
         [StringLength(450)]
         public string UserId { get; set; } = null!;
-        [Column(TypeName = "datetime")]
+        [Column(TypeName = "date")]
         public DateTime StartDate { get; set; }
         [StringLength(50)]
         public string Statusi { get; set; } = null!;
@@ -28,7 +28,6 @@ namespace GymManagementSystem.Data.Entities
         public string Antaresimi1 { get; set; } = null!;
 
         [ForeignKey("UserId")]
-        [InverseProperty("Antaresimis")]
         public virtual AspNetUser User { get; set; } = null!;
         [InverseProperty("Antari")]
         public virtual ICollection<Hyrjet> Hyrjets { get; set; }

@@ -1,6 +1,6 @@
-﻿namespace Presentation.Areas.Admin.Models.MembersViewModel
+﻿namespace GymManagementSystem.Models
 {
-    public class MemberViewModel
+    public class MembersViewModel
     {
         public string? Id { get; set; }
         public string? UserId { get; set; }

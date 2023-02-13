@@ -29,6 +29,7 @@ builder.Services.AddTransient<IRolesRepository, RolesRepository>();
 builder.Services.AddTransient<IUserService, UserService>();
 builder.Services.AddTransient<IMemberRepository, MemberRepository>();
 builder.Services.AddTransient<ISelectListService, SelectListService>();
+builder.Services.AddTransient<IEntryRepository, EntryRepository>();
 
 
 builder.Services.Configure<IdentityOptions>(options =>
