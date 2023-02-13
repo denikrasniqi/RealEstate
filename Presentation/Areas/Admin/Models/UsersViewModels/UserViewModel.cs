@@ -5,6 +5,7 @@ using GymManagementSystem.Data.Identity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Presentation.Areas.Admin.Models.UsersViewModels
 {
@@ -27,6 +28,10 @@ namespace Presentation.Areas.Admin.Models.UsersViewModels
         //public UserPicture? UserPicture { get; set; }
 
         public SelectList? Roles { get; set; }
+        //Relationships
+        public List<Antaresimi>? AntarId { get; set; }
+        [ForeignKey("AntarId")]
+        public Antaresimi Antaresimi { get; set; }
     }
 
 }

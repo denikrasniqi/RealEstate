@@ -40,10 +40,11 @@ namespace Presentation.Areas.Admin.Controllers
         public IActionResult Add()
         {
             var model = new MemberViewModel();
+            model.Users = new SelectList(selectListService.GetTypesKeysValues(), "Key", "Value", model.UserId);
             return View(model);
         }
         [HttpPost]
-        public async Task<IActionResult> AddAsync(MemberViewModel model)
+        public async Task<IActionResult> AddAsync(MemberViewModel model,UserViewModel usermodel)
         {
             if (ModelState.IsValid)
             {

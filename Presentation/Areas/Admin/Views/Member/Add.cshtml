@@ -71,6 +71,17 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <!-- select -->
+                                        <div class="form-group">
+                                            <label>@SharedLocalizer["SelectType"]</label>
+                                            <select asp-for="UserId" asp-items="@Model.Users" class="form-control">
+                                                <option value="">- Select type -</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
                                 <div class="col-sm-6">
                                     <div class="form-group">
                                         <label>Surname</label>
