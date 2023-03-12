@@ -1,0 +1,16 @@
+C:\LatestGym\Schema\bin\Debug\Schema.dacpac
+C:\LatestGym\Schema\bin\Debug\Schema.dll
+C:\LatestGym\Schema\bin\Debug\Schema.pdb
+C:\LatestGym\Schema\obj\Debug\Schema.sqlproj.AssemblyReference.cache
+C:\LatestGym\Schema\obj\Debug\Model.xml
+C:\LatestGym\Schema\obj\Debug\refactor.xml
+C:\LatestGym\Schema\obj\Debug\postdeploy.sql
+C:\LatestGym\Schema\obj\Debug\predeploy.sql
+C:\LatestGym\Schema\obj\Debug\Schema.dll
+C:\LatestGym\Schema\obj\Debug\Schema.pdb
+C:\WebProject\LatestGym\Schema\bin\Debug\Schema.dacpac
+C:\WebProject\LatestGym\Schema\bin\Debug\Schema.dll
+C:\WebProject\LatestGym\Schema\bin\Debug\Schema.pdb
+C:\WebProject\LatestGym\Schema\obj\Debug\Schema.sqlproj.AssemblyReference.cache
+C:\WebProject\LatestGym\Schema\obj\Debug\Schema.dll
+C:\WebProject\LatestGym\Schema\obj\Debug\Schema.pdb
